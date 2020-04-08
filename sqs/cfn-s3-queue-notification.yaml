@@ -18,15 +18,12 @@ Parameters:
   AppName:
     Type: String
     Default: queue-notification
-    AllowedValues:
-      - queue-notification
   Environment:
     Type: String
-    AllowedValues:
-      - dev
-      - test
-      - prod
     Default: dev
+  BucketSuffix:
+    Type: String
+    Default: 14182008132320    
 
 Resources:
   SourceBucket:
@@ -36,7 +33,7 @@ Resources:
       - StandardQueue
       - QueuePolicy
     Properties:
-      BucketName: !Join [ "-", [ !Ref AppName, !Ref Environment ] ]
+      BucketName: !Join [ "-", [ !Ref AppName, !Ref Environment, !Ref BucketSuffix ] ]
       NotificationConfiguration:
         QueueConfigurations:
           - Event: s3:ObjectCreated:*
@@ -63,7 +60,7 @@ Resources:
             Condition:
               ArnLike:
                 # Static BucketName used to avoid circular dependency with S3 bucket
-                aws:SourceArn: !Join [ "", ["arn:aws:s3:*:*:", !Join [ "-", [ !Ref AppName, !Ref Environment ] ] ] ]
+                aws:SourceArn: !Join [ "", ["arn:aws:s3:*:*:", !Join [ "-", [ !Ref AppName, !Ref Environment, !Ref BucketSuffix  ] ] ] ]
       Queues:
         - !Ref PriorityQueue
         - !Ref StandardQueue
