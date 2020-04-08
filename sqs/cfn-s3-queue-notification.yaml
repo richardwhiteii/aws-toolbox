@@ -4,15 +4,15 @@ AWSTemplateFormatVersion: "2010-09-09"
 Description: S3 Queue Notifications Test
 Metadata:
   AWS::CloudFormation::Interface:
-    ParameterGroups:
-      - Label:
-          default: Stack Variables
-        Parameters:
-          - Environment
-      - Label:
-          default: Constants
-        Parameters:
-          - AppName
+#    ParameterGroups:
+#      - Label:
+#          default: Stack Variables
+#        Parameters:
+#          - Environment
+#      - Label:
+#          default: Constants
+#        Parameters:
+#          - AppName
 
 Parameters:
   AppName:
